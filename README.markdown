@@ -9,7 +9,7 @@
 * ImageMagick
 * Ruby v. 1.9.2
 * Rails v. 3.x
-* Gems: couchrest, couchrest_extended_document, dicom v. 0.8, narray, iconv, pony
+* Gems: mongo_mapper, dicom v. 0.8, narray, iconv, pony
 
 **Note**
 
