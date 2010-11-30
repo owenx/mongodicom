@@ -19,7 +19,7 @@ log = Logger.new('mongodicom_import.log')
 
 
 # Define the directory to be read
-DIRS = ["/usr/local/dicom/bin"]
+DIRS = ["/Users/sween/Desktop/DICOM"]
 
 # Class to generate a CouchDB extended document
 class Dicomdoc 
@@ -58,7 +58,7 @@ def extract_value(element)
   # Read value as CouchDB value for that key:
   cdbvalue = element.value
   # Convert encoding to UTF-8
-  #cdbvalue = Iconv.conv("UTF-8","ISO_8859-1",cdbvalue) if cdbvalue.class == String
+  cdbvalue = Iconv.conv("UTF-8","ISO_8859-1",cdbvalue) if cdbvalue.class == String
   
   return cdbvalue.to_s
 end
