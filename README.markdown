@@ -22,3 +22,6 @@
 * Update the variable DB with the Database name of the mongoDB database 
 * Update the variable DIRS with the DICOM directory path to scan
 * Run the selected Ruby Script: ruby cdicom-noattach-nobulk-mongo.rb
+
+
+forked from simonmd/couchdicom
