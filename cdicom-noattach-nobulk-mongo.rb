@@ -12,7 +12,7 @@ require 'mongo_mapper'
 
 include DICOM
 # Intialize logger
-log = Logger.new('couchdicom_import.log')
+log = Logger.new('mongodicom_import.log')
   log.level = Logger::WARN
   log.debug("Created logger")
   log.info("Program started")
