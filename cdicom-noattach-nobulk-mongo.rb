@@ -1,11 +1,9 @@
-# Converting this to MongoDB, forked form simonmd
+# Converting this to MongoDB, forked form simonmd/couchdicom
 # Ron Sweeney, Health Neutral
 # Modules required:
 require 'rubygems'
 require 'find'
 require 'active_record'
-#require 'couchrest'
-#require 'couchrest_extended_document'
 require 'dicom' # version 0.8
 require 'narray'
 require "iconv"
@@ -19,12 +17,6 @@ log = Logger.new('couchdicom_import.log')
   log.debug("Created logger")
   log.info("Program started")
 
-# Create CouchDB database if it doesn't already exist
-#DB     = CouchRest.database!('http://localhost:5984/couchwado')
-
-# Set the limit of documents for bulk updating
-#DB.bulk_save_cache_limit = 500
-
 
 # Define the directory to be read
 DIRS = ["/usr/local/dicom/bin"]
@@ -34,16 +26,9 @@ class Dicomdoc
   include MongoMapper::Document
   MongoMapper.database = "dicom"
 
-  #unique_id :slug
   key :unique_id, String
-  #key :slug, String
-  #timestamps!
-  
-  #property :slug, :read_only => true
+  timestamps!  
   key :docuid, String
-  #property :docuid
-  #timestamps!
-  #set_callback :save, :before, :generate_slug_from_docuid
 
   def generate_slug_from_docuid
     self['slug'] = docuid if new?
@@ -63,7 +48,7 @@ def extract_key(element)
     # Prepend a 't' for easier javascript map/reduce functions:
     cdbkey = "t" + cdbkey
   end
-  puts cdbkey
+  
   return cdbkey.to_s
 end
 
@@ -74,7 +59,7 @@ def extract_value(element)
   cdbvalue = element.value
   # Convert encoding to UTF-8
   #cdbvalue = Iconv.conv("UTF-8","ISO_8859-1",cdbvalue) if cdbvalue.class == String
-  puts cdbvalue
+  
   return cdbvalue.to_s
 end
 
@@ -133,7 +118,7 @@ files.each_index do |i|
     currentdicom = Dicomdoc.new(h)
     # Set the document ID to the Instance Unique ID (UID)
     currentdicom.docuid = h["t00080018"].to_s
-    puts h["t00080018"].to_s
+    # debugger puts h["t00080018"].to_s
     # Save the CouchDB document
     begin
       currentdicom.save
