@@ -38,6 +38,7 @@ Find a Tag that matches a value
 (Select all from dicomdocs where tag 00081050 = 'CV')
 > db.dicomdocs.find({t00081050:"CV"}).forEach(printjson);
 
-
+Count the number of documents
+> db.dicomdocs.find().count()
 
 forked from simonmd/couchdicom
