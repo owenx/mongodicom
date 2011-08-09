@@ -66,7 +66,7 @@ end
 # Returns a hash with tag/data-element-value (or child elements) are used as key/value.
 def process_children(parent_element)
   h = Hash.new
-  # Iterate over all children and repeat recursively for any child which is parent:
+ ## Iterate over all children and repeat recursively for any child which is parent:
   parent_element.children.each do |element|
     if element.children?
       value = process_children(element)
@@ -114,12 +114,12 @@ files.each_index do |i|
     h = process_children(dcm)
     # Save filepath in hash
     h["filepath"] = files[i]
-    # Create new CouchDB document with the generated hash
+    # Create new mongoDB document with the generated hash
     currentdicom = Dicomdoc.new(h)
     # Set the document ID to the Instance Unique ID (UID)
     currentdicom.docuid = h["t00080018"].to_s
     # debugger puts h["t00080018"].to_s
-    # Save the CouchDB document
+    # Save the mongoDB document
     begin
       currentdicom.save
       # Uncomment if bulk saving is desired (Little performance gain, bottleneck is in dicom reads)
